@@ -47,6 +47,11 @@ numero dw ?, 0ah, 0dh, '$'
 num db ?
 letra db ?    
 
+;Variables de comprobacion para saber si un barco fue hundido
+recorrido_tres db 3
+recorrido_cuatro db 4
+recorrido_cinco db 5
+
 
 .code               ;comienzo del segmento de codigo
 .start              ;inicio de las instrucciones
