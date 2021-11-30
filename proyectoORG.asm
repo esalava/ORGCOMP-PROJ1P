@@ -47,52 +47,21 @@ numero dw ?, 0ah, 0dh, '$'
  
 
 
-numalAzar:
-lea dx, msgg1
-mov ah, 9
-int 21h
-Mov ah,2ch
-Int 21h
-xor ax, ax
-mov dh, 00h
-add ax, dx
-aaa
-add ax, 3030h
-mov numero[0], ax
-lea dx, numero
-mov ah, 9
-int 21h  
-
-
-cmp al,7
-
-
-cmp al,0
-;je aggBarco5V
-cmp al,1 
-;je aggBarco5V
-cmp al,2
-;je aggBarco5V 
-cmp al,3
-;je aggBarco4H
-cmp al,4
-;je aggBarco4H
-cmp al,5
-;je aggBarco4H
-cmp al,6
-;je aggBarco3H
-cmp al,7
-;je aggBarco3H
-cmp al,8
-;je aggBarco3H  
-cmp al,9
-;je aggBarco5H
-
- 
-
-
-   
-
+;numalAzar:
+;lea dx, msgg1
+;mov ah, 9
+;int 21h
+;Mov ah,2ch
+;Int 21h
+;xor ax, ax
+;mov dh, 00h
+;add ax, dx
+;aaa
+;add ax, 3030h
+;mov numero[0], ax
+;lea dx, numero
+;mov ah, 9
+;int 21h  
 
 
 
@@ -173,7 +142,7 @@ cmp si,42
 je saltolinea
 cmp si,49  
 jne imprimir 
-mov bp,1  
+mov bp,1       ;CONTADOR DE MISILES
 je atacar
 
 
@@ -189,7 +158,6 @@ int 21h
 jmp imprimir
 
  
-;bp y di 
 
 atacar: 
 mov ah,09h
@@ -198,25 +166,80 @@ int 21h
 mov ah, 09h         ;funcion para mostrar cadena de caracteres
 lea dx, msgMisil         
 int 21h 
-mov ah, 6
+;mov ah, 6
+;mov cx,bp
+;mov dx,cx    ;contador 
+;add dx,30h
+;int 21h
+cmp bp,10      ;LLEGA HASTA EL MISIL 9   
+jae  mayorque9
+jne menorque9 
+;mov ah, 09h         ;funcion para mostrar cadena de caracteres
+;lea dx, msgAtacar         
+;int 21h  
+;inc bp  
+;cmp bp,10      ;LLEGA HASTA EL MISIL 9
+;jne atacar  
+;je mayoresque9
+
+
+mayorque9:
+mov ah,6
+mov dx,cx    ;contador 
+add dx,30h
+int 21h     
+mov ah,6  
+mov dx,di    ;contador2 
+add dx,30h
+int 21h  
+mov ah, 09h         ;funcion para mostrar cadena de caracteres
+lea dx, msgAtacar         
+int 21h 
+inc bp 
+inc di  
+cmp bp,20
+jne atacar   
+je imprimir20
+
+
+imprimir20:     
+mov ah,09h
+mov dx, offset linefeed          ;newline
+int 21h
+mov ah, 09h         ;funcion para mostrar cadena de caracteres
+lea dx, msgMisil         
+int 21h 
+inc cx 
+mov ah,6
+mov dx,cx    ;contador 
+add dx,30h
+int 21h     
+mov ah,6 
+mov di,0 
+mov dx,di    ;contador2 
+add dx,30h
+int 21h  
+mov ah, 09h         ;funcion para mostrar cadena de caracteres
+lea dx, msgAtacar         
+int 21h   
+jmp salir 
+
+
+menorque9: 
+mov ah,6
 mov cx,bp
-mov dl,cl
-add dl,30h
+mov dx,cx    ;contador 
+add dx,30h
 int 21h 
 mov ah, 09h         ;funcion para mostrar cadena de caracteres
 lea dx, msgAtacar         
 int 21h 
+inc bp   
+mov cx,1  
+mov di, 0
+jmp atacar
 
-
-
- 
- 
-
-
-
-
-
-   
+  
 
 salir:
 .exit
